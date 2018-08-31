@@ -8,7 +8,7 @@ https://docs.djangoproject.com/en/2.1/howto/deployment/wsgi/
 """
 
 import os
-import sys
+
 
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE",
