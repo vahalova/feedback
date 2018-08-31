@@ -11,7 +11,7 @@
             </div>
         {% endif %}
         {% if post.comments.count == 0 %}
-            <spnt>Přidej první feedback!</span>
+            <spnt>Přidej první hodnocení!</span>
         {% else %}
             <spnt> Hodnocení: {{ post.comments.count }}</span>
         {% endif %}
@@ -25,7 +25,7 @@
                 <hr>
             </div>
         {% empty %}
-            <p>Lekce nemá hodnocení :-(</p>
+            <p>Lekci zatím nikdo nehodnotil :-(</p>
         {% endfor %}
     </div>
 </div>
