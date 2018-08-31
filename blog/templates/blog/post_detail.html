@@ -1,0 +1,32 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class="post-detail">
+    <div class="post">
+        <h1>{{ post.title }}</h1>
+        <p>{{ post.text|linebreaksbr }}</p>
+        {% if post.published_date %}
+            <div class="date">
+                {{ post.published_date }}
+            </div>
+        {% endif %}
+        {% if post.comments.count == 0 %}
+            <spnt>Přidej první feedback!</span>
+        {% else %}
+            <spnt> Hodnocení: {{ post.comments.count }}</span>
+        {% endif %}
+    </div>
+
+<a class="btn" href="{% url 'add_comment_to_post' pk=post.pk %}">Přidat zpětnou vazbu</a>
+    <div class="comments">
+        {% for comment in post.comments.all %}
+            <div class="comment">
+                <p>{{ comment.text|linebreaks }}</p>
+                <hr>
+            </div>
+        {% empty %}
+            <p>Lekce nemá hodnocení :-(</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
