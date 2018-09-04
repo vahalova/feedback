@@ -4,14 +4,17 @@ from blog.models import Post
 from blog.forms import PostForm, CommentForm
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import Context
+import os
+nazev_kurzu = os.environ.get('nazev_kurzu', 'ke kurzu')
+
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
-    return render(request, 'things/post_list.html', {'posts': posts})
+    return render(request, 'things/post_list.html', {'posts': posts, 'nazev_kurzu': nazev_kurzu})
 
 def post_detail(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    return render(request, 'things/post_detail.html', {'post': post})
+    post = Post.objects.get(pk=pk)
+    return render(request, 'things/post_detail.html', {'post': post, 'nazev_kurzu': nazev_kurzu})
 
 def post_new(request):
     if request.method == "POST":
@@ -24,7 +27,7 @@ def post_new(request):
             return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm()
-    return render(request, 'things/post_edit.html', {'form': form})
+    return render(request, 'things/post_edit.html', {'form': form, 'nazev_kurzu': nazev_kurzu})
 
 def post_edit(request, pk):
     post = get_object_or_404(Post, pk=pk)
@@ -38,7 +41,7 @@ def post_edit(request, pk):
             return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm(instance=post)
-    return render(request, 'things/post_edit.html', {'form': form})
+    return render(request, 'things/post_edit.html', {'form': form, 'nazev_kurzu': nazev_kurzu})
 
 def add_comment_to_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
@@ -51,4 +54,4 @@ def add_comment_to_post(request, pk):
             return redirect('post_detail', pk=post.pk)
     else:
         form = CommentForm()
-    return render(request, 'things/add_comment_to_post.html', {'form': form})
+    return render(request, 'things/add_comment_to_post.html', {'form': form, 'nazev_kurzu': nazev_kurzu})
