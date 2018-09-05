@@ -4,6 +4,7 @@ from blog.models import Post
 from blog.forms import PostForm, CommentForm
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import Context
+from django.http import Http404
 import os
 nazev_kurzu = os.environ.get('nazev_kurzu', 'ke kurzu')
 
@@ -14,7 +15,10 @@ def post_list(request):
 
 def post_detail(request, pk):
     post = Post.objects.get(pk=pk)
-    return render(request, 'things/post_detail.html', {'post': post, 'nazev_kurzu': nazev_kurzu})
+    if post.published_date<=timezone.now():
+        return render(request, 'things/post_detail.html', {'post': post, 'nazev_kurzu': nazev_kurzu})
+    else:
+        raise Http404
 
 def post_new(request):
     if request.method == "POST":
