@@ -3,10 +3,13 @@
 {% block content %}
 <div class="post-detail">
     <div class="comments">
-        <h1>Tvoje zpětná vazba nám pomáhá se zlepšovat.</h1>
-        <p>Napiš nám prosím Tvůj názor na lekci. Stíhala jsi?
-            Bylo něco, čemu jsi nerozuměla? Byla pro Tebe lekce moc těžká/lehká/akorát?
-             Když jsi potřebovala, pomohl Ti kouč?</p>
+        <h1>Napiš nám, jak se ti dnešní sraz líbil.</h1>
+        <p>Ty se učíš Python, my se zase učíme, jak Python vyučovat.
+        Chceme připravovat lepší kurzy, a proto potřebujeme tvou zpětnou vazbu.
+        Stíhala jsi? Rozuměla jsi všemu? Pokud ne - čemu? Byla pro Tebe lekce moc těžká/lehká/akorát?
+        Když jsi potřebovala, pomohl Ti kouč? Můžeme něco vylepšit? Chceš nás zkritizovat?
+        Jen do toho!
+        Zpětná vazba je anonymní.</p>
     </div>
     <form method="POST" class="post-form">
         {% csrf_token %}

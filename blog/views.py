@@ -14,38 +14,11 @@ def post_list(request):
     return render(request, 'things/post_list.html', {'posts': posts, 'nazev_kurzu': nazev_kurzu})
 
 def post_detail(request, pk):
-    post = Post.objects.get(pk=pk)
+    post = get_object_or_404(Post, pk=pk)
     if post.published_date<=timezone.now():
         return render(request, 'things/post_detail.html', {'post': post, 'nazev_kurzu': nazev_kurzu})
     else:
         raise Http404
-
-def post_new(request):
-    if request.method == "POST":
-        form = PostForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.published_date = timezone.now()
-            post.save()
-            return redirect('post_detail', pk=post.pk)
-    else:
-        form = PostForm()
-    return render(request, 'things/post_edit.html', {'form': form, 'nazev_kurzu': nazev_kurzu})
-
-def post_edit(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    if request.method == "POST":
-        form = PostForm(request.POST, instance=post)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.published_date = timezone.now()
-            post.save()
-            return redirect('post_detail', pk=post.pk)
-    else:
-        form = PostForm(instance=post)
-    return render(request, 'things/post_edit.html', {'form': form, 'nazev_kurzu': nazev_kurzu})
 
 def add_comment_to_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
