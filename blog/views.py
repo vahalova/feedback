@@ -10,8 +10,9 @@ nazev_kurzu = os.environ.get('nazev_kurzu', 'ke kurzu')
 
 
 def post_list(request):
-    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
-    return render(request, 'things/post_list.html', {'posts': posts, 'nazev_kurzu': nazev_kurzu})
+    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date').reverse()[1:]
+    current_lessons = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date').reverse()[:1]
+    return render(request, 'things/post_list.html', {'posts': posts, 'current_lessons':current_lessons, 'nazev_kurzu': nazev_kurzu})
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
@@ -31,4 +32,4 @@ def add_comment_to_post(request, pk):
             return redirect('post_detail', pk=post.pk)
     else:
         form = CommentForm()
-    return render(request, 'things/add_comment_to_post.html', {'form': form, 'nazev_kurzu': nazev_kurzu})
+    return render(request, 'things/add_comment_to_post.html', {'form': form, 'post':post, 'nazev_kurzu': nazev_kurzu})
